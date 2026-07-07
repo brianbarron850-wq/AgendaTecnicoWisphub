@@ -246,7 +246,7 @@
 
           <div>
               <label class="flex justify-between items-center block text-xs font-bold text-slate-600 mb-1">
-                <span>Se realizó</span>
+               <span>Se realizó</span>
               <button type="button" onclick="gestionarLista('config_lista_serealizo', 'Opciones de Se realizó')" class="admin-only text-indigo-500 hover:text-indigo-800 text-[10px] px-1 bg-indigo-50 rounded hidden">⚙️ Editar</button>
              </label>
             <select id="form_serealizo" class="w-full border border-slate-300 rounded-lg p-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"></select>
@@ -423,7 +423,7 @@
     // ==========================================
     // ADAPTACIÓN API PARA GITHUB PAGES / HOST EXTERNO
     // ==========================================
-    const URL_API_GAS = "https://script.google.com/macros/s/AKfycbzCDMgaYJ_d8K940lEi12mHS066oEfKJJIO19TIFB844tn1-9u-R09haLbKhel-Xmo2tQ/exec";
+    const URL_API_GAS = "https://script.google.com/macros/s/AKfycbzC748AysvwELyVaMF7s93azOTkMEuiEkp03dXyWbJhnTR9ZyOgukAoRnrm17S9C8ixpg/exec";
     if (typeof google === 'undefined') {
       window.google = {
         script: {
@@ -479,10 +479,10 @@
     const agentesPorDefecto = ["Denise", "Jenni", "Luz", "Luis", "Brian", "Fernando", "Laura", "Mario", "Jaime", "Kennya"];
     const coloniasPorDefecto = ["11_Febrero", "2_Octubre", "20 Aniversario", "Acequias De Tabalaopa", "Acuapuerto", "Adolfo Lopez Mateos", "Aeropuerto", "Agricola Francisco Villa", "Aires Del Sur", "Alamedas Rinconada Oriente", "Alamos", "Alamos II", "Alamos ll", "Alamos lll", "Alamos lV", "Alamos lV", "Aldama", "Alfredo Chavez", "Ampleacion Los Huizaches", "Ampleacion Once De Febrero", "Ampliacion Crucero", "Ampliacion Crucero ll", "Ampliacion Diaz Ordaz", "Ampliacion Lomas De Oriente", "Ampliacion Nuevo Triunfo", "Ampliacion Pilares", "Ampliacion Universitaria", "Antiguo Lienzo Charro", "Antorcha Popular", "Aquiles Serdan", "Arroyo Nogales", "Arturo Gamiz", "Atenas", "Atenas lll", "Atenas lV", "Avalos", "Barrio De Londres", "Batalla de Sacramento", "Bella Cumbre", "Bellavista", "Berna Residencial", "Bomberos Estacion Sur", "Bosques", "Bosques Boreales", "Cafetales", "Camino Real", "Camino Real ll", "Camino Real V", "Campesina", "Campestre", "Campestre Las Alamedas", "Campestre Las Alamedas", "Campo Viejo", "Campo Viejo", "Campo Viejo", "Campo Viejo", "Canon Del Venado ll", "Carretera Aldama", "Carretera Chihuahua-Aldama", "Carretera Presa-Chihuahua", "Carrizalillo", "Cataluña Etapa II", "Catania Residencial", "CDP", "Centro", "Cerezos", "Cerrada San Luis", "Cerrada Vista Valencia", "Cerro De La cruz", "Cerro Grande", "Cerro Prieto", "Chihuahua 2000", "Chihuahua 2000 ll", "Chihuahua 2000-94", "Clara Cordova", "Colinas Del Sol", "Colonia Nuevas Delicias", "Colonia Sacramento", "Complejo Industrial Chihuahua", "Constituyentes", "Cordilleras", "Crucero", "Cruz Del Sur", "Cuahutemoc", "Cumbres De Robinson", "Cumbres De Robinson ll", "Cumbres De Sacramento", "Cumbres Del Sur", "Cumbres lll", "Cumbres Unversidad", "Dale", "Del Valle Cerrado", "Del Valle l", "Del Valle ll", "Del Valle, Cerrada Rio Amur", "Del Valle, Cerrada Rio Sena", "Del Valle, Cerrada Rio Uruguay", "Deportistas", "Desarrollo Urbano", "Diamante", "Diaz Ordaz", "Diego Lucero", "Divisadero", "Division Del Norte", "Division Del Norte ( Sauz )", "Dos De Junio", "Ejidal", "Ejido Bellavista", "Ejido Colonia Sacramento", "Ejido Colonia Sacramento", "Ejido La Noria", "Ejido Labor De Terrazas", "Ejido Lindero", "Ejido Nuevo Sacramento", "Ejido Rancheria Juarez", "Ejido Robinson", "Ejido Sacramento", "Ejido San Joaquin", "Ejido Villa Aldama", "El Arbol", "El Charco", "El Fundador", "El Huerto", "El Mimbre", "El Mimbre De Arriba", "El Porvenir", "El Ranchito", "El Refugio", "El Sauz", "Encinillas", "Esperanza", "Felipe Angeles", "Fidel Velazquez", "Flores Magon", "Fraccionamiento El Mineral", "Fraccionamiento Esla", "Fraccionamiento Roma", "Fraccionamiento Versalles", "Francisco Agricola", "Francisco Dominguez", "Francisco R Almada", "Francisco Villa", "Fundadores", "Girasoles", "Girasoles ll", "Girasoles lll", "Las Granjas", "Granjas Campestre Mirador", "Granjas Cerro Grande", "Granjas Chihuahua", "Granjas De Chihuahua", "Granjas Del Sur", "Granjas Del Sur", "Granjas Del Valle", "Granjas Del Valle", "Granjas Del Valle ll", "Granjas Las Torres", "Granjas Los Mezquites", "Granjas Paraiso", "Granjas Sacramento", "Granjas San Joaquin", "Granjas San Luis", "Granjas Santa Elena", "Granjas Santa Maria", "Granjas Santa Maria", "Granjas Villa Juarez l", "Ignacio Rodriguez", "Inalambrica", "Independencia", "Indigo", "Industrial", "Infonavit Insurgentes", "Infonavit Nacional", "Infonavit Saucito", "Insurgentes", "Jardines De Los Eucaliptos", "Jardines De Oriente l", "Jardines De Oriente ll", "Jardines De Oriente lX", "Jardines De Oriente lX", "Jardines De Oriente V", "Jardines De Oriente Vll", "Jardines De Sacramento", "Jardines De San Agustin", "Jardines de San Agustin ll", "Jardines De San Agustin lll", "Jardines Del Sol", "Jardines Los Eucaliptos", "Jorge Barousse", "Josefa Ortiz De Dominguez", "Juan Guereca", "Junta de los Ríos", "La Cima", "La Galera", "La Junta", "La Lluvia", "La Marina", "La Marqueza", "La Mesa", "La minita", "La Mora", "La Noria", "La Pista", "Labor de Terrazas", "Laderas De San Guillermo", "Laderas De San Guillermo ll", "Laderas De San Guillermo lll", "Ladrillera Tarahumara", "Ladrilleras", "Ladrilleros", "Laos Residencial", "Las Alamedas", "Las Aldabas", "Las Aldabas Cerrada Toscana", "Las Cruces", "Las Lunas", "Las Malvinas", "Las Margaritas", "Las Norias", "Las Nuevas Margaritas", "Las Pampas", "Las Pampas ll", "Las Torres", "Las Torres lll", "Las Torres Norte", "Lealtad l", "Lealtad ll", "Linda Vista", "Lomas Altas lll", "Lomas De Montecarlo", "Lomas De Oriente", "Lomas De Oriente - Los Portales", "Lomas Del Sol", "Lomas Karike", "Los Alamos", "Los Alamos Vl", "Los Arcos", "Los Arroyos", "Los Bosques", "Los Encinos De Oriente l", "Los Fresnos", "Los Huertos", "Los Huizaches", "Los Leones lV", "Los Llanos", "Los Naranjos", "Los Nogales", "Los Olivos", "Los Portales", "Los Potreros", "Luis Donaldo Colosio", "Madera 65", "Margarita Maza De Juarez", "Margaritas", "Maria Isabel", "Maria Luisa", "Marmol l", "Marmol ll", "Marmol lll", "Marmol Viejo", "Martin Lopez", "Maseru", "Maseru ll", "Melchor Ocampo", "Mexico", "Mezquite", "Miguel HIdalgo", "Miguel Sigala", "Minerales", "Miramar", "Misael Nunez", "Mision De San Ignacio", "Mision De Sisoguichi", "Molino De Agua", "Monte Bonito", "Monte Carlo ll", "Monte Olivo", "Monte Olivo ll", "Monte Verde", "Monte Xenit", "Monteverde", "Monteverde Cerrada Jardines De Granada", "Montolivo ll", "Montolivo lll", "Multimercado Zarco", "Nogales Ponderosa", "Novena Etapa", "Nueva Vizcaya Residencial", "Nuevas Delicias", "Nuevo Delicias", "Nuevo Milenio", "Nuevo Triunfo", "Obrera", "Pablo Gomez", "Padierna", "Palestina", "Palma Real", "Palma Real V", "Panoramico", "Parque Industrial Aeropuerto", "Parque Industrial Impulso", "Paseo De Las Flores", "Paseo De Los Alamos", "Paseo De Los Leones", "Paseos De Chihuahua", "Paseos De Los Leones", "Paseos De Los Leones V", "Paseos Del Camino Real", "Paseos Del Camino Real lll", "Paseos Del Camino Real lV", "Paseos Del Camino Real V", "Paso Del Norte", "Pavis Borunda", "Pedro Dominguez", "Pena Blanca", "Pensiones", "Plan De Ayala", "Ponce De Leon", "Popular", "Portal Del Real", "Portal Del Real ll", "Portal Del Valle", "Porticos De Bella Cumbre", "Porvenir", "Pozos Del Valle", "Praderas", "Praderas De San Antonio", "Praderas Del Norte", "Praderas Del Sur", "Praderas Del Sur ll", "Praderas Del Sur V", "Prado Sur", "Prado Sur ll", "Privadas Del Sur", "Privadas Del Sur ll", "Privadas Del Sur lll", "Privadas Del Sur V", "Puerta De Alcala", "Puerta De La Ciudad", "Puerta Del Valle", "Puerta Real", "Puerta Savona", "Puerta Savona V", "Punta Esperanza Oriente", "Punta Naranjos", "Punta Naranjos ll", "Punta Naranjos lV", "Punta Oriente", "Punta Oriente ll", "Punta Oriente lll", "Punta Oriente lV", "Punta Oriente V", "Punta Oriente Vl", "Quinta Arboleda", "Quinta Montecarlo", "Quinta San Carlos", "Quinta San Miguel", "Quinta Versalles", "Quinta Villalobos", "Quintas Carolinas", "Quintas Juan Pablo", "Quintas Quijote", "Quintas San Antonio", "Quintas Sebastian", "R. Almada", "Rancheria Juarez", "Rancho Enmedio", "Rancho Guadalupe", "Real Carolinas", "Real De Minas", "Real Plus", "Renovacion", "Residencial Campestre ll", "Residencial Leones", "Residencial Leones ll", "Revolucion", "Riberas De Sacramento", "Riberas De Sacramento ll", "Riberas De Sacramento lV", "Riberas Del Valle", "Ricardo Flores Magon", "Rigoberto Quiroz", "Rinconada De Sierra Azul", "Rinconada Los Nogales", "Rinconada Los Nogales lV", "Rinconada Oriente", "Rinconada Oriente ll", "Rinconada Oriente lll", "Rinconadas La Sierra", "Riscos Del Angel", "Robinson", "Rodolfo Aguilar", "Rodolfo Fierro", "Romance", "Romanzza", "Rosario", "Ruben Jaramillo", "Sacramento", "Salida A Cuauhtemoc", "San Agustin", "San Antonio", "San Felipe", "San Felipe lll", "San Fernando", "San Gabriel", "San Gabriel ll", "San Guillermo", "San Isidro", "San Joaquin", "San Jorge", "San Jose", "San Juan Bautista", "San Lazaro", "San Pedro", "San Rafael", "Santa Elena", "Santa Elena, Aquiles Serdan", "Santa Eulalia", "Santa Isabel", "Santa Maria", "Santa Rosa", "Santo Nino", "Saucito", "Secretaria De La Marina", "Sector 3", "Sector Tres Robinson", "SEP", "Sergio De La Torre", "Sierra Azul", "Sol de Oriente", "Sol De Oriente lll", "Solar Del Valle", "Solar Del Valle ll", "Tabalaopa", "Tahona", "Tarahumara", "Tarahumara Sur", "Terranova", "Tierra Bella", "Tierra y Libertad", "Toribio Ortega", "Torres Del Sur", "Tres Castillos", "Tres De Mayo", "Tres Marias", "Unidad", "Unidad De Esta Ciudad", "Unidad Nacional", "Unidad Proletaria", "Union Antorchista", "UP", "Urbi Villa Del Prado", "Urbi Villas Del Rey", "Valle De La Madrid", "Valle De San Pedro", "Valle De San Pedro ll", "Valle De San Pedro lll", "Valle De San Quintin", "Valle del Sauco", "Valle Del Sauz", "Valle Dorado", "Valle Escondido", "Valle Grande", "Valle Imperial", "Vallecillo", "Valles De Chihuahua", "Valles De San Agustin", "Valles Del Sur", "Vendanova", "Vendanova ll", "Veredas Del Sur", "Veredas Del Sur ll", "Veredas Del Sur lll", "Veteranos", "Via Residencial", "Vias De Sacramento", "Vicente Guereca", "Vientos de Sacramento", "Vilanova", "Vilanova ll", "Villa del real", "Villa Dolores", "Villa Juarez", "Villa Nueva", "Villa San Lorenzo V", "Villa Vieja", "Villas Del Real", "Villas Del Refugio", "Villas del Rey", "Villas Del Rey lll", "Villas Del Rey V", "Villas Del Sur", "Vinedos California", "Vista Hermosa", "Vistas", "Vistas Avalos", "Vistas Cerro Grande", "Vistas De San Guillermo", "Vistas De San Guillermo ll", "Vistas del Norte", "Vistas Del Norte ll", "Vistas Del Norte lll", "Vistas Del Norte lV", "Vistas Del Norte V", "Vistas Del Prado", "Vistas Del Prado ll", "Zootecnia", "Ignacio Allende", "Colinas Del Leon", "Bosques de san Pedro", "Monte Bonito", "Progreso", "Lomas Vallarta", "Sahuaros", "CNOP", "Proyecto Guadalupe Etapa I", "Las Vinas", "Fraccionamiento Laderas", "Nombre De Dios", "Cumbres de robinson IV", "Del Valle Cerrada Rio Niger", "Ejido Chacon", "Alleza Norte", "La Marqueza II", "Localidad Los Leones", "Barrio del Norte", "Guadalupe", "La Villa ( Nuevo Delicias )", "Ojo Del Apache", "Lomeli", "Hidalgo", "Morse", "Arquitos", "Tracia", "Herradero", "Ampleacion Tres De Mayo", "Los Pinos", "La Soledad", "Hacienda San Marcos", "Quinta Real", "Monarca", "La Joya", "Ejido Villa Aldama", "Integracion", "La Haciendita", "Rancho Los Leones", "Paquime", "Ejido Ocampo", "Ejido Estacion Terrazas", "Los Cerezos", "Caminos Del Valle", "Bahias", "Vistas Del Pedregal", "Avicola Y Ganadera Felipe Angeles", "Angel Trias", "Vida Digna", "Rancho Suarez", "Ejido El Fresno", "Ampleacion Ruiz Maseu", "Jardines Del Saucito", "Cumbres Del Eden"];
     const planesPorDefecto = ["30mb", "50mb", "Cortesia", "PCCC", "PCNCC", "CCC", "CNCC", "Gratis", "No aplica"];
-    const confirmadaPorDefecto = ["No", "Sí", "Mesaje"];
-    const serealizoPorDefecto = ["Pendiente", "Sí", "No", "Reagendar", "Reagendo", "Cancelo"];
-    const yafueclientePorDefecto = ["No", "Sí"];
-    const bienvenidaPorDefecto = ["Sí", "No", "Pendiente"];
+    const confirmadaPorDefecto = ["No", "Si", "Mesaje"];
+    const serealizoPorDefecto = ["Pendiente", "Si", "No", "Reagendar", "Reagendo", "Cancelo"];
+    const yafueclientePorDefecto = ["No", "Si"];
+    const bienvenidaPorDefecto = ["Si", "No", "Pendiente"];
     const mediosPorDefecto = ["Amigo/Familiar", "Facebook", "Radio", "Es cliente", "No contesto", "Rotulo", "Recomendación", "Folleto", "Página Web", "Otros"];
     const camposPermitidosTecnico = [
       'form_ip',
@@ -496,7 +496,6 @@
     let rolUsuario = null;
     let autoSyncInterval = null;
     window.isDragging = false;
-
     // CONFIGURACIÓN DE LAS TABLAS DEL DASHBOARD
     const configTablas = {
         tabla1: { titulo: "Instalaciones", tipo: "bar", labelsCol: true },
@@ -551,7 +550,6 @@
     };
 
     document.addEventListener('dragend', function() { window.isDragging = false; });
-    
     function verificarPin() {
       try {
           const pinInput = document.getElementById('inputPin');
@@ -606,7 +604,6 @@
       document.getElementById('modalLogin').classList.add('hidden');
       document.getElementById('appContenedor').classList.remove('hidden');
       document.getElementById('badgeRol').innerText = rol === 'admin' ? 'Administrador' : 'Técnico';
-      
       if (rol === 'tecnico') {
         document.getElementById('panelAdmin').classList.add('hidden');
         document.querySelectorAll('.admin-only').forEach(function(el) { el.classList.add('hidden') });
@@ -635,12 +632,7 @@
 
     function iniciarSincronizacionAutomatica() {
       if(autoSyncInterval) clearInterval(autoSyncInterval);
-      autoSyncInterval = setInterval(function() {
-        // OPTIMIZACIÓN: Solo sincronizar si la pestaña del navegador está visible para el usuario
-        if (!document.hidden) {
-            sincronizarDatosSilencioso();
-        }
-      }, 10000);
+      autoSyncInterval = setInterval(sincronizarDatosSilencioso, 10000);
     }
 
     function sincronizarDatosSilencioso() {
@@ -656,7 +648,7 @@
                 baseDatosGoogle.forEach(function(c) {
                     if (c.tecnico) c.tecnico = normalizarTecnico(c.tecnico);
                 });
-      
+                
                 let modalAbierto = !document.getElementById('modalRegistro').classList.contains('hidden');
                 let wispAbierto = !document.getElementById('modalWisphubSeleccion').classList.contains('hidden');
                 
@@ -692,7 +684,6 @@
       const originalText = btn.innerHTML;
       btn.innerHTML = "⏳";
       btn.disabled = true;
-      
       if (typeof google !== 'undefined' && google.script && google.script.run) {
         google.script.run
           .withSuccessHandler(function(res) {
@@ -737,7 +728,6 @@
           let estado = (data.estado || "Desconocido").toUpperCase();
           badge.innerText = estado;
           badge.className = "text-[11px] uppercase tracking-wider font-black px-2 py-1 rounded-lg border shadow-sm";
-          
           if(estado === 'ACTIVO' || estado === 'INSTALADO') { badge.classList.add('bg-emerald-100', 'text-emerald-800', 'border-emerald-300'); } 
           else if(estado === 'SUSPENDIDO' || estado === 'CORTADO' || estado === 'MOROSO') { badge.classList.add('bg-rose-100', 'text-rose-800', 'border-rose-300'); } 
           else if(estado === 'INACTIVO' || estado === 'DESINSTALADO' || estado === 'CANCELADO') { badge.classList.add('bg-slate-100', 'text-slate-800', 'border-slate-300'); } 
@@ -796,7 +786,6 @@
         document.getElementById('form_telefono').value = data.telefono || "";
         document.getElementById('form_calleynumero').value = data.calleynumero || "";
         document.getElementById('form_coordenadasoentrecalles').value = data.coordenadas || "";
-        
         if (data.colonia) {
             let valorExactoColonia = asegurarOpcionSelect('form_coloniaofracc', data.colonia);
             document.getElementById('form_coloniaofracc').value = valorExactoColonia;
@@ -817,7 +806,6 @@
             let estado = (data.estado || "Desconocido").toUpperCase();
             badge.innerText = estado;
             badge.className = "text-[11px] uppercase tracking-wider font-black px-2 py-1 rounded-lg border shadow-sm";
-            
             if(estado === 'ACTIVO' || estado === 'INSTALADO') { badge.classList.add('bg-emerald-100', 'text-emerald-800', 'border-emerald-300'); } 
             else if(estado === 'SUSPENDIDO' || estado === 'CORTADO' || estado === 'MOROSO') { badge.classList.add('bg-rose-100', 'text-rose-800', 'border-rose-300'); } 
             else if(estado === 'INACTIVO' || estado === 'DESINSTALADO' || estado === 'CANCELADO') { badge.classList.add('bg-slate-100', 'text-slate-800', 'border-slate-300'); } 
@@ -893,47 +881,54 @@
       baseDatosGoogle.forEach(function(c) {
           if (c.fecha === fechaActual && c.tecnico && cuadrillasHoy.indexOf(c.tecnico) === -1) { cuadrillasHoy.push(c.tecnico); }
       });
+      
       cuadrillasHoy.forEach(function(tec) {
           let citasTec = baseDatosGoogle.filter(function(c) { return c.fecha === fechaActual && c.tecnico === tec; });
           
           citasTec.sort(function(a, b) {
               let horA = (a.horario || "").trim().toLowerCase();
               let horB = (b.horario || "").trim().toLowerCase();
-              let isDispA = horA.indexOf("disponibilidad") !== -1;
-              let isDispB = horB.indexOf("disponibilidad") !== -1;
+              let isDispA = horA.indexOf("disponibilidad") !== -1 || horA.indexOf("disponible") !== -1;
+              let isDispB = horB.indexOf("disponibilidad") !== -1 || horB.indexOf("disponible") !== -1;
 
               if (isDispA && !isDispB) return 1;
               if (!isDispA && isDispB) return -1;
 
-              function parseTime(t) {
-                  if (!t) return 0;
-                  let text = t.replace(/\s+/g, '');
-                  let isPM = text.includes('pm');
-                  let isAM = text.includes('am');
-                  let match = text.match(/(\d{1,2})(?::(\d{1,2}))?/);
-                  if (match) {
-                      let h = parseInt(match[1], 10) || 0;
-                      let m = parseInt(match[2], 10) || 0;
-                      if (isPM && h < 12) h += 12;
-                      if (isAM && h === 12) h = 0;
-                      if (text.includes('antes')) m -= 1;
-                      if (text.includes('despues')) m += 1;
-                      return h * 60 + m;
-                  }
-                  return 0;
+              // Nueva lógica para acomodo cronológico de horarios
+              function parseHorario(h) {
+                  if(!h) return 9999;
+                  if(h.indexOf("antes de las 12") !== -1) return 11 * 60 + 59;
+                  if(h.indexOf("despues de las 12") !== -1) return 12 * 60 + 1;
+                  if(h.indexOf("antes de las 3") !== -1) return 14 * 60 + 59;
+                  if(h.indexOf("despues de las 3") !== -1) return 15 * 60 + 1;
+                  if(h.indexOf("despues de las 6") !== -1) return 18 * 60 + 1;
+
+                  let match = h.match(/(\d{1,2}):(\d{2})\s*(am|pm)?/);
+                  if(!match) return 9999;
+                  
+                  let horas = parseInt(match[1], 10);
+                  let mins = parseInt(match[2], 10);
+                  let ampm = match[3];
+
+                  if (ampm === "pm" && horas < 12) horas += 12;
+                  if (ampm === "am" && horas === 12) horas = 0;
+                  // Si no tiene am/pm (como "10:30"), asumimos horario normal 12hrs
+                  if (!ampm && horas >= 1 && horas <= 6) horas += 12;
+                  
+                  return horas * 60 + mins;
               }
 
-              let minA = parseTime(horA);
-              let minB = parseTime(horB);
+              let valA = parseHorario(horA);
+              let valB = parseHorario(horB);
 
-              if (minA < minB) return -1;
-              if (minA > minB) return 1;
-              if (horA < horB) return -1;
-              if (horA > horB) return 1;
+              if (valA < valB) return -1;
+              if (valA > valB) return 1;
               return 0;
           });
+          
           citasTec.forEach(function(cita, idx) { cita.espacio = idx + 1; });
       });
+      
       let cuadrillasDelDia = {};
       baseDatosGoogle.forEach(function(cita) {
           if (cita.fecha === fechaActual && cita.tecnico && !ocultasHoy[cita.tecnico]) {
@@ -950,9 +945,11 @@
               if (espNum > cuadrillasDelDia[cita.tecnico]) { cuadrillasDelDia[cita.tecnico] = espNum; }
           }
       });
+      
       Object.keys(manualesHoy).forEach(function(tec) {
           if (!cuadrillasDelDia[tec] && !ocultasHoy[tec]) { cuadrillasDelDia[tec] = (espaciosPorFecha[fechaActual] && espaciosPorFecha[fechaActual][tec]) ? espaciosPorFecha[fechaActual][tec] : 4; }
       });
+      
       espaciosPorFecha[fechaActual] = cuadrillasDelDia;
       safeStorage.setItem('espacios_por_fecha_v4', JSON.stringify(espaciosPorFecha));
       
@@ -972,6 +969,7 @@
       
       const gridDiv = document.createElement('div');
       gridDiv.className = "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-" + Math.min(cuadrillasVisibles.length, 4) + " gap-4 items-start";
+      
       cuadrillasVisibles.forEach(function(cuadrilla) {
           const numEspacios = cuadrillasDelDia[cuadrilla];
           const colDiv = document.createElement('div');
@@ -989,11 +987,14 @@
           }
           
           let btnRuta = '<button onclick="abrirRutaMapa(\'' + cuadrilla + '\', \'' + fechaActual + '\')" title="Ver ruta en mapa" class="hover:bg-indigo-500 bg-indigo-700 px-1.5 py-0.5 rounded text-xs transition-colors ml-2 shrink-0 border border-indigo-500 shadow-sm flex items-center gap-1">🗺️ Ruta</button>';
+          
           let htmlCol = '<div class="flex justify-between items-center bg-indigo-600 text-white p-2 rounded mb-3 shadow">' +
               '<h3 class="font-bold text-sm tracking-wide uppercase truncate w-full pl-1">' + cuadrilla + '</h3>' + btnRuta + adminControles +
           '</div><div class="space-y-3">';
+          
           for(let i = 1; i <= numEspacios; i++) {
               const cita = baseDatosGoogle.find(function(c) { return c.tecnico === cuadrilla && c.fecha === fechaActual && c.espacio == i; });
+              
               if (cita) {
                   let motivoText = (cita.motivo || "").toLowerCase();
                   let serealizoVal = (cita.serealizo || "").toString().trim().toLowerCase();
@@ -1082,7 +1083,7 @@
                            'ondragover="dragOver(event)" ondragleave="dragLeave(event)" ondrop="drop(event, \'' + cuadrilla + '\', ' + i + ')">' +
                           '<span class="text-xl leading-none block mb-1">+</span>' +
                           '<span class="text-[10px] font-bold uppercase tracking-wider">Añadir al Espacio ' + i + '</span>' +
-                         '</div>';
+                          '</div>';
               }
           }
           htmlCol += '</div>';
@@ -1098,7 +1099,6 @@
         
         nombreNuevo = normalizarTecnico(nombreNuevo);
         if (nombreNuevo === "" || nombreNuevo === normalizarTecnico(nombreViejo)) return;
-        
         if (espaciosPorFecha[fecha] && espaciosPorFecha[fecha][nombreViejo]) {
             espaciosPorFecha[fecha][nombreNuevo] = espaciosPorFecha[fecha][nombreViejo];
             delete espaciosPorFecha[fecha][nombreViejo];
@@ -1128,7 +1128,6 @@
     function eliminarCuadrilla(fecha, cuadrilla) {
         if (!confirm('¿Estás seguro de ocultar la columna de "' + cuadrilla + '" de la vista de hoy?\n\nNota: Los registros internos no se borrarán de Google Sheets, solo desaparecerá la columna de la agenda visual de forma temporal.')) return;
         window.cuadrillasOcultas = window.cuadrillasOcultas || {}; if (!window.cuadrillasOcultas[fecha]) window.cuadrillasOcultas[fecha] = {}; window.cuadrillasOcultas[fecha][cuadrilla] = true;
-        
         if (espaciosPorFecha[fecha] && espaciosPorFecha[fecha][cuadrilla]) {
             delete espaciosPorFecha[fecha][cuadrilla];
             if (window.cuadrillasManuales && window.cuadrillasManuales[fecha]) { delete window.cuadrillasManuales[fecha][cuadrilla]; }
@@ -1142,16 +1141,17 @@
         let select = document.getElementById(idSelect); if (!select) return valor;
         let existe = false; let valorExacto = valor;
         for (let i = 0; i < select.options.length; i++) {
-            if (select.options[i].value.toString().trim().toLowerCase() === valor.toString().trim().toLowerCase()) { existe = true; valorExacto = select.options[i].value; break; }
+            if (select.options[i].value.toString().trim().toLowerCase() === valor.toString().trim().toLowerCase()) { existe = true;
+            valorExacto = select.options[i].value; break; }
         }
-        if (!existe) { let opt = document.createElement('option'); opt.value = valor; opt.innerText = valor; select.appendChild(opt); }
+        if (!existe) { let opt = document.createElement('option');
+        opt.value = valor; opt.innerText = valor; select.appendChild(opt); }
         return valorExacto;
     }
 
     function abrirModalNuevo(cuadrilla, espacio) {
       document.getElementById('formularioAgenda').reset();
       const contenedorBadge = document.getElementById('contenedor_estado_wisphub'); if(contenedorBadge) contenedorBadge.classList.add('hidden');
-      
       document.getElementById('form_rownum').value = '';
       document.getElementById('form_fecha').value = document.getElementById('filtroFecha').value;
       document.getElementById('form_cuadrilla').value = cuadrilla;
@@ -1159,7 +1159,6 @@
       
       asegurarOpcionSelect('form_tecnico', cuadrilla);
       document.getElementById('form_tecnico').value = cuadrilla;
-      
       document.getElementById('modalTitulo').innerText = "Nuevo Registro - " + cuadrilla;
       document.getElementById('btnEliminarRegistro').classList.add('hidden');
       document.getElementById('btnDuplicarRegistro').classList.add('hidden'); 
@@ -1189,7 +1188,6 @@
              el.value = cita[c] || "";
          }
       });
-      
       document.getElementById('modalTitulo').innerText = "Editar Registro - " + cita.nombredelcliente;
       
       if(rolUsuario === 'admin') {
@@ -1215,7 +1213,6 @@
       }
 
       if (!confirm("¿Estás seguro de que deseas guardar este registro?")) return;
-      
       const rowNum = document.getElementById('form_rownum').value;
       const fecha = document.getElementById('form_fecha').value;
       
@@ -1223,7 +1220,6 @@
       let cuadrillaOriginal = document.getElementById('form_cuadrilla').value;
       if (!inputTecnico || inputTecnico.trim() === "") { inputTecnico = cuadrillaOriginal; }
       const tecnico = normalizarTecnico(inputTecnico);
-      
       let espacioFinal = document.getElementById('form_espacio').value;
       if (tecnico !== normalizarTecnico(cuadrillaOriginal)) {
           let esp = 1;
@@ -1232,7 +1228,7 @@
       }
 
       const horario = document.getElementById('form_horario').value;
-      if (horario && horario.trim().toLowerCase().indexOf("disponibilidad") === -1) {
+      if (horario && horario.trim().toLowerCase().indexOf("disponibilidad") === -1 && horario.trim().toLowerCase().indexOf("disponible") === -1) {
         const horarioDuplicado = baseDatosGoogle.some(function(c) {
           return c.fecha === fecha && c.tecnico === tecnico && c.horario && c.horario.trim().toLowerCase() === horario.trim().toLowerCase() && c.rowNum != rowNum;
         });
@@ -1277,9 +1273,10 @@
       if (typeof google !== 'undefined' && google.script && google.script.run) {
           google.script.run
             .withSuccessHandler(function(res) {
-               if(res.status === 'success') { cerrarModal(); sincronizarDatos(); } else alert("Error: " + res.message);
+               if(res.status === 'success') { cerrarModal(); sincronizarDatos(); } 
+               else alert("Error: " + res.message);
                btn.innerHTML = "Guardar Cambios"; btn.disabled = false;
-             })
+            })
             .withFailureHandler(function(err) {
                alert("Error de conexión: " + err);
                btn.innerHTML = "Guardar Cambios"; btn.disabled = false;
@@ -1299,7 +1296,6 @@
        if (!regexFecha.test(nuevaFecha.trim())) { alert("⚠️ Formato de fecha inválido. Por favor usa AAAA-MM-DD."); return; }
 
        if (!confirm("¿Estás seguro de que deseas duplicar este registro para el día " + nuevaFecha.trim() + "?")) return;
-       
        let citaOriginal = baseDatosGoogle.find(function(c) { return c.rowNum == rowNum; });
        if(!citaOriginal) return;
 
@@ -1312,20 +1308,21 @@
        const btn = document.getElementById('btnDuplicarRegistro');
        const textoOriginal = btn.innerHTML;
        btn.innerHTML = "⏳ Duplicando..."; btn.disabled = true;
-       
        if (typeof google !== 'undefined' && google.script && google.script.run) {
            google.script.run
              .withSuccessHandler(function(res) {
-                if(res.status === 'success') { alert("✅ Registro duplicado exitosamente al " + nuevaFecha.trim()); cerrarModal(); sincronizarDatos(); } 
-                else { alert("Error al duplicar: " + res.message); }
+                if(res.status === 'success') { 
+                    alert("✅ Registro duplicado exitosamente al " + nuevaFecha.trim());
+                    cerrarModal(); sincronizarDatos(); 
+                } else { alert("Error al duplicar: " + res.message); }
                 btn.innerHTML = textoOriginal; btn.disabled = false;
              })
              .withFailureHandler(function(err) {
                 alert("Error de conexión al duplicar: " + err);
-                 btn.innerHTML = textoOriginal; btn.disabled = false;
+                btn.innerHTML = textoOriginal; btn.disabled = false;
              })
              .guardarRegistroAgenda(datosPayload);
-      }
+       }
     }
 
     function eliminarRegistroBD() {
@@ -1333,7 +1330,6 @@
        const rowNum = document.getElementById('form_rownum').value;
        if(!rowNum) return;
        const usuario = safeSession.getItem('nombre_usuario') || safeSession.getItem('sesion_activa');
-       
        google.script.run
          .withSuccessHandler(function(res) {
             if(res.status === 'success') { cerrarModal(); sincronizarDatos(); } else alert("Error: " + res.message);
@@ -1397,7 +1393,7 @@
       const espacioOcupado = baseDatosGoogle.some(function(c) { return c.fecha === cita.fecha && c.tecnico === nuevaCuadrilla && c.espacio == nuevoEspacio && c.rowNum != cita.rowNum; });
       if (espacioOcupado) { alert("⚠️ Acción denegada: Este espacio ya está ocupado."); return; }
 
-      if (cita.horario && cita.horario.trim().toLowerCase().indexOf("disponibilidad") === -1) {
+      if (cita.horario && cita.horario.trim().toLowerCase().indexOf("disponibilidad") === -1 && cita.horario.trim().toLowerCase().indexOf("disponible") === -1) {
          const horarioDuplicado = baseDatosGoogle.some(function(c) { return c.fecha === cita.fecha && c.tecnico === nuevaCuadrilla && c.horario && c.horario.trim().toLowerCase() === cita.horario.trim().toLowerCase() && c.rowNum != cita.rowNum; });
          if (horarioDuplicado) { alert("⚠️ Advertencia: El horario '" + cita.horario + "' ya está asignado a la cuadrilla '" + nuevaCuadrilla + "'. Movimiento cancelado."); return; }
       }
@@ -1461,7 +1457,6 @@
     }
 
     let baseDatosCompletaAdmin = { headers: [], rows: [] };
-    
     function abrirVistaGeneralAdmin() {
       if (rolUsuario !== 'admin') return;
       document.getElementById('vistaAdminFiltros').classList.remove('hidden'); sincronizarVistaAdmin();
@@ -1487,10 +1482,8 @@
       const tbody = document.getElementById('tablaAdminBody');
       thead.innerHTML = ''; tbody.innerHTML = '';
       if (!baseDatosCompletaAdmin.headers || baseDatosCompletaAdmin.headers.length === 0) return;
-      
       const filaTitulos = document.createElement('tr'); const filaFiltros = document.createElement('tr');
       filaFiltros.className = "bg-slate-50 border-b border-indigo-100 shadow-sm";
-      
       baseDatosCompletaAdmin.headers.forEach((header, index) => {
         const th = document.createElement('th');
         th.className = "px-3 py-3 font-bold text-indigo-800 whitespace-nowrap uppercase tracking-wider border-b border-indigo-100 text-[11px] text-center";
@@ -1512,16 +1505,16 @@
         filaFiltros.appendChild(thFiltro);
       });
       thead.appendChild(filaTitulos); thead.appendChild(filaFiltros);
-      
       baseDatosCompletaAdmin.rows.forEach((row, rowIndex) => {
         const tr = document.createElement('tr'); 
         tr.className = "hover:bg-indigo-50 transition-colors cursor-pointer"; 
         tr.id = `fila_admin_raw_${rowIndex}`;
         
+        // EVENTO DOBLE CLIC PARA EDITAR REGISTRO SIN CERRAR LA VISTA GENERAL
         tr.ondblclick = function() {
             abrirModalEdicion(rowIndex + 2);
         };
-  
+        
         row.forEach((cellValue) => {
           const td = document.createElement('td'); td.className = "px-3 py-2.5 whitespace-nowrap text-slate-600 max-w-[200px] truncate text-[11px] border-b border-slate-100"; td.textContent = cellValue || ""; td.title = cellValue || ""; tr.appendChild(td);
         });
@@ -1555,7 +1548,7 @@
             else if (filtro.inicio || filtro.fin) { cumpleFiltros = false; break; }
           } else {
             if (filtro.query) {
-              const esIgualDirecto = (cellValue === filtro.query);
+               const esIgualDirecto = (cellValue === filtro.query);
               if (!esIgualDirecto && filtro.regex && !filtro.regex.test(cellValue)) { cumpleFiltros = false; break; }
             }
           }
@@ -1580,17 +1573,16 @@
         const txtOrig = btn.innerHTML;
         btn.innerHTML = "⏳...";
         btn.disabled = true;
-        
         if (typeof google !== 'undefined' && google.script && google.script.run) {
             google.script.run
                 .withSuccessHandler(function(res) {
                     btn.innerHTML = txtOrig; btn.disabled = false;
                     if(res.status === 'success') {
                         alert("Fechas guardadas correctamente.");
-                        sincronizarDashboard();
+                        sincronizarDashboard(); // Recargar datos para refrescar las tablas
                     } else {
-                        alert("Error al guardar fechas: " + res.message);
-                    }
+                         alert("Error al guardar fechas: " + res.message);
+                     }
                 })
                 .withFailureHandler(function(err) {
                     btn.innerHTML = txtOrig; btn.disabled = false;
@@ -1611,6 +1603,7 @@
             if (btn) btn.innerHTML = "🔄 Actualizar Datos";
             if (res.status === 'success') { 
                 datosDashboardGral = res.data; 
+                // Asignar las fechas recuperadas a los inputs
                  if (res.data.fechas) {
                     document.getElementById('dashFechaD1').value = res.data.fechas.d1 || '';
                     document.getElementById('dashFechaG1').value = res.data.fechas.g1 || '';
@@ -1648,8 +1641,8 @@
             div.innerHTML = `
                <div>
                  <div class="w-12 h-12 rounded-full bg-indigo-50 border border-indigo-100 flex items-center justify-center text-indigo-600 mb-4 text-2xl shadow-sm">
-                   ${iconStr}
-                 </div>
+                    ${iconStr}
+                  </div>
                  <h3 class="font-bold text-slate-800 text-lg leading-tight mb-2">${conf.titulo}</h3>
                  <p class="text-xs text-slate-500 mb-4">Haz clic para expandir la tabla detallada y visualizar la gráfica interactiva.</p>
                </div>
@@ -1673,7 +1666,6 @@
         
         let labelsForChart = [];
         let datasetsForChart = [];
-        
         if (conf.esColumnar) {
             let headers = Object.keys(rawData);
             let headTr = document.createElement('tr');
@@ -1716,7 +1708,6 @@
             let thCat = document.createElement('th');
             thCat.className = "px-4 py-3 font-bold uppercase tracking-wider text-xs"; 
             thCat.innerText = "Categoría"; headTr.appendChild(thCat);
-            
             for(let i=0; i<numVals; i++) {
                 let th = document.createElement('th');
                 th.className = "px-4 py-3 font-bold uppercase tracking-wider text-xs"; 
@@ -1724,7 +1715,6 @@
                 headTr.appendChild(th);
             }
             thead.appendChild(headTr);
-            
             keys.forEach(k => {
                 let tr = document.createElement('tr');
                 tr.className = "hover:bg-slate-50 transition-colors";
@@ -1739,8 +1729,7 @@
                     tr.appendChild(td);
                 });
                 tbody.appendChild(tr);
-           });
-           
+            });
             labelsForChart = keys;
             datasetsForChart.push({
                 label: "Valor Principal",
@@ -1748,8 +1737,7 @@
                 backgroundColor: '#4f46e5',
                 borderColor: '#3730a3',
                 borderWidth: 1
-            });
-            
+             });
             if (numVals > 1 && conf.tipo !== 'pie') {
                 datasetsForChart.push({
                     label: "Valor Secundario",
@@ -1767,16 +1755,7 @@
 
     function renderCanvasChart(type, labels, datasets) {
         if (chartInstance) { chartInstance.destroy(); }
-        
-        // OPTIMIZACIÓN: Verificación para asegurar que el Canvas existe en el DOM antes de renderizar
-        const canvasElement = document.getElementById('dashModalCanvas');
-        if (!canvasElement) {
-            console.warn("El canvas no está listo en el DOM para renderizar.");
-            return; 
-        }
-        
-        const ctx = canvasElement.getContext('2d');
-        
+        const ctx = document.getElementById('dashModalCanvas').getContext('2d');
         if (type === 'pie') {
             const pieColors = ['#4f46e5', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6', '#ec4899', '#06b6d4', '#f97316', '#64748b'];
             datasets[0].backgroundColor = pieColors.slice(0, labels.length);
@@ -1789,7 +1768,7 @@
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
-                plugins: {
+                 plugins: {
                     legend: { position: type === 'pie' ? 'right' : 'top' },
                     tooltip: {
                         callbacks: {
@@ -1798,8 +1777,8 @@
                                 if (label) { label += ': '; }
                                 if (context.parsed.y !== null) { label += context.parsed.y; }
                                 return label;
-                            }
-                        }
+                             }
+                         }
                     }
                 }
             }
