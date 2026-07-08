@@ -444,16 +444,16 @@
               fetch(URL_API_GAS, {
                 method: 'POST',
                 headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-                body: JSON.stringify({ func: funcName, args: args })
+                body: JSON.stringify({ func: funcName, args: args }),
+                redirect: 'follow' // AÑADIDO PARA SOLUCIONAR EL ERROR "FAILED TO FETCH"
               })
               .then(res => {
                   if (!res.ok) throw new Error("Fallo en la red: " + res.status);
                   return res.text();
               })
               .then(text => {
-                // Validación para evitar que trate de leer HTML (Error de Cuotas o Permisos) como si fuera JSON
                 if (text.trim().startsWith('<')) {
-                    throw new Error("⚠️ Alerta de Google:\nLa conexión devolvió una página en lugar de datos.\n\nEsto suele pasar porque excediste el límite de peticiones (cuotas) de Google de hoy, o los permisos de la URL en Apps Script no están en 'Cualquier Persona'.");
+                    throw new Error("⚠️ Alerta de Google:\nLa conexión devolvió una página en lugar de datos.\n\nEsto suele pasar porque los permisos de la URL en Apps Script no están en 'Cualquier Persona' o porque excediste las cuotas.");
                 }
                 
                 const data = JSON.parse(text);
@@ -462,7 +462,14 @@
               })
               .catch(err => { 
                 console.error("Error en conexión:", err);
-                if (failureCb) failureCb(err.message || err); 
+                
+                // MENSJAJE MEJORADO PARA DETECTAR FAILED TO FETCH
+                let errorMsg = err.message || err.toString();
+                if (errorMsg.includes('Failed to fetch')) {
+                  errorMsg = "Failed to fetch: La petición ha sido bloqueada. Revisa que la URL de la API sea correcta, que la implementación de Apps Script tenga acceso 'Cualquier persona', y que no tengas bloqueadores de anuncios (AdBlock, uBlock, Brave Shields) interfiriendo con la conexión.";
+                }
+                
+                if (failureCb) failureCb(errorMsg); 
               });
             },
             validarAutenticacion: function(pin) { this._call('validarAutenticacion', [pin]); },
@@ -656,17 +663,12 @@
     }
 
     // ==========================================
-    // OPTIMIZACIÓN DE RENDIMIENTO - CORRECCIÓN DE ERROR HTML
+    // OPTIMIZACIÓN DE RENDIMIENTO
     // ==========================================
     function iniciarSincronizacionAutomatica() {
       if(autoSyncInterval) clearInterval(autoSyncInterval);
       
-      // Se redujo la frecuencia a 1 minuto (60000ms).
-      // Anteriormente estaba en 10 segundos, lo cual sobrepasaba 
-      // fácilmente el límite de "cuotas de peticiones" diarias de Apps Script
-      // lo que causaba que devolviera un error en HTML y rompiera la app.
       autoSyncInterval = setInterval(function() {
-        // Solo enviará petición si el usuario tiene la ventana abierta y activa
         if (document.visibilityState === 'visible') {
             sincronizarDatosSilencioso();
         }
