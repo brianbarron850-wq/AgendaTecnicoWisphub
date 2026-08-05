@@ -440,36 +440,56 @@
               const failureCb = this._onFailure;
               this._onSuccess = null;
               this._onFailure = null;
-              
-              fetch(URL_API_GAS, {
-                method: 'POST',
-                headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-                body: JSON.stringify({ func: funcName, args: args }),
-                redirect: 'follow' // AÑADIDO PARA SOLUCIONAR EL ERROR "FAILED TO FETCH"
-              })
-              .then(res => {
-                  if (!res.ok) throw new Error("Fallo en la red: " + res.status);
-                  return res.text();
-              })
-              .then(text => {
-                if (text.trim().startsWith('<')) {
+
+              const requestBody = JSON.stringify({ func: funcName, args: args });
+              const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
+              const REINTENTOS_MAX = 3;
+              const ESPERAS_MS = [0, 1500, 3000]; // FIX E1: reintentos para 404 por redirección POST→GET en GAS
+
+              const ejecutar = async () => {
+                for (let i = 0; i < REINTENTOS_MAX; i++) {
+                  if (i > 0) await delay(ESPERAS_MS[i]);
+
+                  let res;
+                  try {
+                    res = await fetch(URL_API_GAS, {
+                      method: 'POST',
+                      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                      body: requestBody,
+                      redirect: 'follow'
+                    });
+                  } catch (fetchErr) {
+                    // FIX E2: error de red (Failed to fetch) — reintentar si no es el último intento
+                    if (i < REINTENTOS_MAX - 1) continue;
+                    throw fetchErr;
+                  }
+
+                  if (!res.ok) {
+                    // FIX E1: error HTTP 404 (redirección POST→GET) — reintentar
+                    if (i < REINTENTOS_MAX - 1) continue;
+                    throw new Error("Fallo en la red: " + res.status);
+                  }
+
+                  const text = await res.text();
+
+                  if (text.trim().startsWith('<')) {
                     throw new Error("⚠️ Alerta de Google:\nLa conexión devolvió una página en lugar de datos.\n\nEsto suele pasar porque los permisos de la URL en Apps Script no están en 'Cualquier Persona' o porque excediste las cuotas.");
+                  }
+
+                  const data = JSON.parse(text);
+                  if (data && data.error) { if (failureCb) failureCb(data.error); }
+                  else { if (successCb) successCb(data.result); }
+                  return; // Éxito — salir del bucle
                 }
-                
-                const data = JSON.parse(text);
-                if (data && data.error) { if (failureCb) failureCb(data.error); } 
-                else { if (successCb) successCb(data.result); }
-              })
-              .catch(err => { 
+              };
+
+              ejecutar().catch(err => {
                 console.error("Error en conexión:", err);
-                
-                // MENSJAJE MEJORADO PARA DETECTAR FAILED TO FETCH
                 let errorMsg = err.message || err.toString();
                 if (errorMsg.includes('Failed to fetch')) {
                   errorMsg = "Failed to fetch: La petición ha sido bloqueada. Revisa que la URL de la API sea correcta, que la implementación de Apps Script tenga acceso 'Cualquier persona', y que no tengas bloqueadores de anuncios (AdBlock, uBlock, Brave Shields) interfiriendo con la conexión.";
                 }
-                
-                if (failureCb) failureCb(errorMsg); 
+                if (failureCb) failureCb(errorMsg);
               });
             },
             validarAutenticacion: function(pin) { this._call('validarAutenticacion', [pin]); },
