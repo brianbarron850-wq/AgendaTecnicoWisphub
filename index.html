@@ -4,8 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Gestor de Agenda Tecnicos</title>
-  <!-- Tailwind CDN (modo desarrollo) — para producción instalar via CLI o usar Play CDN con config -->
-  <script src="https://cdn.tailwindcss.com?v=3"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
     .slot-card { transition: all 0.2s ease; }
@@ -473,13 +472,10 @@
               this._onSuccess = null;
               this._onFailure = null;
 
-              // CORS-SAFE: Content-Type text/plain evita preflight OPTIONS.
-              // GAS responde con Access-Control-Allow-Origin:* en las peticiones POST
-              // con redirect:follow para manejar la redirección interna de GAS (302→200).
               const requestBody = JSON.stringify({ func: funcName, args: args });
               const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
               const REINTENTOS_MAX = 3;
-              const ESPERAS_MS = [0, 2000, 4000];
+              const ESPERAS_MS = [0, 1500, 3000]; // FIX E1: reintentos para 404 por redirección POST→GET en GAS
 
               const ejecutar = async () => {
                 for (let i = 0; i < REINTENTOS_MAX; i++) {
@@ -487,64 +483,42 @@
 
                   let res;
                   try {
-                    // FIX CORS: usar mode:'cors' + Content-Type:'text/plain' (simple request, sin preflight)
                     res = await fetch(URL_API_GAS, {
                       method: 'POST',
-                      mode: 'cors',
                       headers: { 'Content-Type': 'text/plain;charset=utf-8' },
                       body: requestBody,
                       redirect: 'follow'
                     });
                   } catch (fetchErr) {
-                    // Error de red real (CORS bloqueado, sin conexión, AdBlock, etc.)
+                    // FIX E2: error de red (Failed to fetch) — reintentar si no es el último intento
                     if (i < REINTENTOS_MAX - 1) continue;
                     throw fetchErr;
                   }
 
-                  // GAS puede devolver 404 en la primera petición (redirección POST→GET);
-                  // reintentar hasta agotar intentos.
                   if (!res.ok) {
+                    // FIX E1: error HTTP 404 (redirección POST→GET) — reintentar
                     if (i < REINTENTOS_MAX - 1) continue;
-                    throw new Error("Error HTTP " + res.status + ". Verifica que el despliegue de Apps Script tenga acceso 'Cualquier persona'.");
-                  }
-
-                  // Respuesta opaque (mode:no-cors) no tiene body — nunca debería llegar aquí
-                  // con mode:'cors', pero se guarda por si acaso.
-                  if (res.type === 'opaque') {
-                    if (i < REINTENTOS_MAX - 1) continue;
-                    throw new Error("Respuesta opaca recibida. Verifica que el despliegue de Apps Script tenga acceso 'Cualquier persona'.");
+                    throw new Error("Fallo en la red: " + res.status);
                   }
 
                   const text = await res.text();
 
-                  if (!text || text.trim() === '') {
-                    if (i < REINTENTOS_MAX - 1) continue;
-                    throw new Error("El servidor devolvió una respuesta vacía. Intenta de nuevo.");
-                  }
-
                   if (text.trim().startsWith('<')) {
-                    throw new Error("⚠️ Alerta de Google:\nLa conexión devolvió una página HTML en lugar de datos JSON.\n\nEsto ocurre porque:\n1. Los permisos de la URL en Apps Script no son 'Cualquier persona'\n2. La URL del despliegue es incorrecta\n3. Se excedieron las cuotas de Google");
+                    throw new Error("⚠️ Alerta de Google:\nLa conexión devolvió una página en lugar de datos.\n\nEsto suele pasar porque los permisos de la URL en Apps Script no están en 'Cualquier Persona' o porque excediste las cuotas.");
                   }
 
-                  let data;
-                  try {
-                    data = JSON.parse(text);
-                  } catch(parseErr) {
-                    if (i < REINTENTOS_MAX - 1) continue;
-                    throw new Error("Error al parsear la respuesta JSON: " + parseErr.message);
-                  }
-
+                  const data = JSON.parse(text);
                   if (data && data.error) { if (failureCb) failureCb(data.error); }
-                  else { if (successCb) successCb(data.result !== undefined ? data.result : data); }
-                  return; // Éxito
+                  else { if (successCb) successCb(data.result); }
+                  return; // Éxito — salir del bucle
                 }
               };
 
               ejecutar().catch(err => {
-                console.error("AgendaTecnicos — Error en conexión GAS:", err);
+                console.error("Error en conexión:", err);
                 let errorMsg = err.message || err.toString();
-                if (errorMsg.includes('Failed to fetch') || errorMsg.includes('NetworkError') || errorMsg.includes('Network request failed')) {
-                  errorMsg = "⚠️ Error de conexión:\nNo se pudo contactar al servidor.\n\nPosibles causas:\n• Bloqueador de anuncios activo (AdBlock, uBlock, Brave Shields) — desactívalo para este sitio\n• La URL de la API en el código no es correcta\n• El despliegue de Apps Script no tiene acceso 'Cualquier persona'\n• Sin conexión a Internet";
+                if (errorMsg.includes('Failed to fetch')) {
+                  errorMsg = "Failed to fetch: La petición ha sido bloqueada. Revisa que la URL de la API sea correcta, que la implementación de Apps Script tenga acceso 'Cualquier persona', y que no tengas bloqueadores de anuncios (AdBlock, uBlock, Brave Shields) interfiriendo con la conexión.";
                 }
                 if (failureCb) failureCb(errorMsg);
               });
@@ -558,7 +532,8 @@
             obtenerTodoContenidoBaseDatos: function() { this._call('obtenerTodoContenidoBaseDatos', []); },
             obtenerDatosDashboard: function() { this._call('obtenerDatosDashboard', []); },
             obtenerAuditoriaEliminados: function() { this._call('obtenerAuditoriaEliminados', []); },
-            actualizarFechasDashboard: function(d1, g1) { this._call('actualizarFechasDashboard', [d1, g1]); }
+            actualizarFechasDashboard: function(d1, g1) { this._call('actualizarFechasDashboard', [d1, g1]); },
+            restaurarRegistroAgenda: function(r, u) { this._call('restaurarRegistroAgenda', [r, u]); }
           }
         }
       };
@@ -1482,16 +1457,10 @@
        const rowNum = document.getElementById('form_rownum').value;
        if(!rowNum) return;
        const usuario = safeSession.getItem('nombre_usuario') || safeSession.getItem('sesion_activa');
-       if (typeof google !== 'undefined' && google.script && google.script.run) {
-         google.script.run
-           .withSuccessHandler(function(res) {
-              if(res.status === 'success') { cerrarModal(); sincronizarDatos(); } else alert("Error: " + res.message);
-           })
-           .withFailureHandler(function(err) { alert("Error al eliminar: " + err); })
-           .eliminarRegistroAgenda(rowNum, usuario);
-       } else {
-         alert("Entorno local detectado. Requiere despliegue de Apps Script.");
-       }
+       google.script.run
+         .withSuccessHandler(function(res) {
+            if(res.status === 'success') { cerrarModal(); sincronizarDatos(); } else alert("Error: " + res.message);
+         }).eliminarRegistroAgenda(rowNum, usuario);
     }
 
     function cerrarModal() { document.getElementById('modalRegistro').classList.add('hidden'); }
@@ -1636,24 +1605,12 @@
       if (btn) btn.innerHTML = "⏳ Sincronizando...";
       document.getElementById('cargandoTablaAdmin').classList.remove('hidden');
       document.getElementById('tablaAdminCompleta').classList.add('hidden');
-      if (typeof google !== 'undefined' && google.script && google.script.run) {
-        google.script.run
-          .withSuccessHandler(function(response) {
-            if (btn) btn.innerHTML = "🔄 Sincronizar";
-            document.getElementById('cargandoTablaAdmin').classList.add('hidden');
-            document.getElementById('tablaAdminCompleta').classList.remove('hidden');
-            if (response.status === 'success') { baseDatosCompletaAdmin = response; construirTablaFiltrosAdmin(); } else { alert('Fallo: ' + response.message); }
-          })
-          .withFailureHandler(function(err) {
-            if (btn) btn.innerHTML = "🔄 Sincronizar";
-            document.getElementById('cargandoTablaAdmin').classList.add('hidden');
-            alert("Error al cargar datos: " + err);
-          })
-          .obtenerTodoContenidoBaseDatos();
-      } else {
+      google.script.run.withSuccessHandler(function(response) {
         if (btn) btn.innerHTML = "🔄 Sincronizar";
-        alert("Entorno local detectado. Requiere despliegue de Apps Script.");
-      }
+        document.getElementById('cargandoTablaAdmin').classList.add('hidden');
+        document.getElementById('tablaAdminCompleta').classList.remove('hidden');
+        if (response.status === 'success') { baseDatosCompletaAdmin = response; construirTablaFiltrosAdmin(); } else { alert('Fallo: ' + response.message); }
+      }).obtenerTodoContenidoBaseDatos();
     }
 
     function cerrarVistaGeneralAdmin() { document.getElementById('vistaAdminFiltros').classList.add('hidden'); }
@@ -1764,38 +1721,77 @@
         document.getElementById('cargandoAuditoria').textContent = 'Cargando registros...';
         document.getElementById('tablaAuditoria').classList.add('hidden');
         document.getElementById('totalAuditoria').textContent = '';
-        if (typeof google !== 'undefined' && google.script && google.script.run) {
-          google.script.run
-              .withSuccessHandler(function(datos) {
-                  document.getElementById('cargandoAuditoria').classList.add('hidden');
-                  if (!datos || !datos.headers || !datos.rows || datos.rows.length === 0) {
-                      document.getElementById('cargandoAuditoria').textContent = 'No hay registros en la auditoría todavía.';
-                      document.getElementById('cargandoAuditoria').classList.remove('hidden');
-                      return;
-                  }
-                  var thead = document.getElementById('tablaAuditoriaHeader');
-                  thead.innerHTML = '<tr>' + datos.headers.map(function(h) {
-                      return '<th class="px-4 py-3 font-bold text-xs uppercase tracking-wider border-b border-red-100">' + h + '</th>';
-                  }).join('') + '</tr>';
-                  var tbody = document.getElementById('tablaAuditoriaBody');
-                  tbody.innerHTML = datos.rows.map(function(row, idx) {
-                      return '<tr class="' + (idx % 2 === 0 ? 'bg-white' : 'bg-red-50/40') + ' hover:bg-red-50 transition-colors">' +
-                          row.map(function(cell) {
-                              return '<td class="px-4 py-2 text-slate-700 whitespace-nowrap">' + (cell || '-') + '</td>';
-                          }).join('') + '</tr>';
-                  }).join('');
-                  document.getElementById('tablaAuditoria').classList.remove('hidden');
-                  document.getElementById('totalAuditoria').textContent = datos.rows.length + ' registro(s) encontrado(s)';
-              })
-              .withFailureHandler(function(err) {
-                  document.getElementById('cargandoAuditoria').classList.remove('hidden');
-                  document.getElementById('cargandoAuditoria').textContent = 'Error al cargar la auditoría: ' + err;
-              })
-              .obtenerAuditoriaEliminados();
-        } else {
-          document.getElementById('cargandoAuditoria').textContent = 'Entorno local detectado. Requiere despliegue de Apps Script.';
-          document.getElementById('cargandoAuditoria').classList.remove('hidden');
-        }
+        google.script.run
+            .withSuccessHandler(function(datos) {
+                document.getElementById('cargandoAuditoria').classList.add('hidden');
+                if (!datos || !datos.headers || !datos.rows || datos.rows.length === 0) {
+                    document.getElementById('cargandoAuditoria').textContent = 'No hay registros en la auditoría todavía.';
+                    document.getElementById('cargandoAuditoria').classList.remove('hidden');
+                    return;
+                }
+                var thead = document.getElementById('tablaAuditoriaHeader');
+                thead.innerHTML = '<tr>' +
+                    '<th class="px-4 py-3 font-bold text-xs uppercase tracking-wider border-b border-red-100 sticky left-0 bg-red-50 z-10">Acción</th>' +
+                    datos.headers.map(function(h) {
+                        return '<th class="px-4 py-3 font-bold text-xs uppercase tracking-wider border-b border-red-100">' + h + '</th>';
+                    }).join('') +
+                '</tr>';
+
+                var tbody = document.getElementById('tablaAuditoriaBody');
+                tbody.innerHTML = datos.rows.map(function(entry, idx) {
+                    var row = entry.cells;
+                    var auditRowNum = entry.auditRowNum;
+                    // Determinar si ya fue restaurado (columna "Restaurado" en el array si existe)
+                    var yaRestaurado = row.some(function(cell) { return cell && cell.toString().indexOf('✅') === 0; });
+                    var btnRestaurar = yaRestaurado
+                        ? '<span class="text-emerald-600 font-bold text-xs whitespace-nowrap">✅ Restaurado</span>'
+                        : '<button onclick="restaurarRegistroAuditoria(' + auditRowNum + ', this)" class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs py-1 px-3 rounded-lg transition-colors whitespace-nowrap shadow-sm">🔄 Restaurar</button>';
+                    return '<tr class="' + (idx % 2 === 0 ? 'bg-white' : 'bg-red-50/40') + ' hover:bg-red-50 transition-colors">' +
+                        '<td class="px-3 py-2 sticky left-0 ' + (idx % 2 === 0 ? 'bg-white' : 'bg-red-50') + ' z-[1]">' + btnRestaurar + '</td>' +
+                        row.map(function(cell) {
+                            return '<td class="px-4 py-2 text-slate-700 whitespace-nowrap max-w-[220px] overflow-hidden text-ellipsis" title="' + (cell || '') + '">' + (cell || '-') + '</td>';
+                        }).join('') +
+                    '</tr>';
+                }).join('');
+                document.getElementById('tablaAuditoria').classList.remove('hidden');
+                document.getElementById('totalAuditoria').textContent = datos.rows.length + ' registro(s) encontrado(s)';
+            })
+            .withFailureHandler(function(err) {
+                document.getElementById('cargandoAuditoria').classList.remove('hidden');
+                document.getElementById('cargandoAuditoria').textContent = 'Error al cargar la auditoría: ' + err;
+            })
+            .obtenerAuditoriaEliminados();
+    }
+
+    function restaurarRegistroAuditoria(auditRowNum, btnEl) {
+        if (!confirm('¿Estás seguro de que deseas restaurar este registro? Se volverá a agregar a la Agenda como un nuevo registro.')) return;
+        var usuario = safeSession.getItem('nombre_usuario') || safeSession.getItem('sesion_activa') || 'Desconocido';
+        btnEl.disabled = true;
+        btnEl.textContent = 'Restaurando...';
+        btnEl.classList.remove('bg-emerald-600', 'hover:bg-emerald-500');
+        btnEl.classList.add('bg-slate-400');
+        google.script.run
+            .withSuccessHandler(function(res) {
+                if (res && res.status === 'success') {
+                    btnEl.outerHTML = '<span class="text-emerald-600 font-bold text-xs whitespace-nowrap">✅ Restaurado</span>';
+                    sincronizarDatos();
+                    alert('✅ Registro restaurado correctamente en la Agenda.');
+                } else {
+                    btnEl.disabled = false;
+                    btnEl.textContent = '🔄 Restaurar';
+                    btnEl.classList.add('bg-emerald-600', 'hover:bg-emerald-500');
+                    btnEl.classList.remove('bg-slate-400');
+                    alert('Error al restaurar: ' + (res ? res.message : 'Respuesta vacía'));
+                }
+            })
+            .withFailureHandler(function(err) {
+                btnEl.disabled = false;
+                btnEl.textContent = '🔄 Restaurar';
+                btnEl.classList.add('bg-emerald-600', 'hover:bg-emerald-500');
+                btnEl.classList.remove('bg-slate-400');
+                alert('Error de conexión al restaurar: ' + err);
+            })
+            .restaurarRegistroAgenda(auditRowNum, usuario);
     }
 
     function guardarFechasDashboard() {
@@ -1834,28 +1830,23 @@
     function sincronizarDashboard() {
         const btn = document.getElementById('btnSincronizarDashboard');
         if (btn) btn.innerHTML = "⏳ Cargando Datos...";
-        if (typeof google !== 'undefined' && google.script && google.script.run) {
-          google.script.run
-            .withSuccessHandler(function(res) {
-              if (btn) btn.innerHTML = "🔄 Actualizar Datos";
-              if (res.status === 'success') { 
-                  datosDashboardGral = res.data; 
-                  if (res.data.fechas) {
-                      document.getElementById('dashFechaD1').value = res.data.fechas.d1 || '';
-                      document.getElementById('dashFechaG1').value = res.data.fechas.g1 || '';
-                  }
-                  renderizarDashboardGrid(); 
-              } else { alert("Error cargando dashboard: " + res.message); }
-            })
-            .withFailureHandler(function(err){
-              if (btn) btn.innerHTML = "🔄 Actualizar Datos";
-              alert("Error de red: " + err);
-            })
-            .obtenerDatosDashboard();
-        } else {
-          if (btn) btn.innerHTML = "🔄 Actualizar Datos";
-          alert("Entorno local detectado. Requiere despliegue de Apps Script.");
-        }
+        google.script.run.withSuccessHandler(function(res) {
+            if (btn) btn.innerHTML = "🔄 Actualizar Datos";
+            if (res.status === 'success') { 
+                datosDashboardGral = res.data; 
+               
+                 if (res.data.fechas) {
+                    document.getElementById('dashFechaD1').value = res.data.fechas.d1 || '';
+                    document.getElementById('dashFechaG1').value = res.data.fechas.g1 || '';
+                }
+                renderizarDashboardGrid(); 
+            } 
+   
+             else { alert("Error cargando dashboard: " + res.message); }
+        }).withFailureHandler(function(err){
+            if (btn) btn.innerHTML = "🔄 Actualizar Datos";
+            alert("Error de red: " + err);
+        }).obtenerDatosDashboard();
     }
 
     function formateaCelda(val) {
